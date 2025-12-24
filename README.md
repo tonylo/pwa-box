@@ -24,6 +24,13 @@ Each app lives in its own folder under `src/`. Example:
 - `src/notes/service-worker.js`
 - `src/notes/assets/`
 
+Specs and planning docs live under `specs/` (for example
+`specs/notes/README.md`) so they are tracked but not deployed.
+
+## Apps
+- `notes` - a small offline notes scratchpad.
+- `lsanta` - Lettie's Santa arrival countdown.
+
 ## Development Workflow
 Serve static files locally from the repo root or an app folder:
 

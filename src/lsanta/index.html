@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1221" />
+    <meta name="description" content="A magical Santa arrival countdown for Lettie." />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Lettie's Santa Arrival</title>
+  </head>
+  <body>
+    <div class="snow" aria-hidden="true"></div>
+    <div class="snow massive-snow" aria-hidden="true"></div>
+    <div class="lights" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div>
+        <h1>Lettie's Santa Arrival</h1>
+        <p class="subhead">A cozy countdown to the big moment.</p>
+      </div>
+      <div class="status-card" aria-live="polite">
+        <p id="status-line">Checking the sky...</p>
+        <span id="local-time"></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="countdown">
+        <div class="countdown-inner">
+          <div class="countdown-label">Santa arrives in</div>
+          <div class="timer" id="timer">
+            <div class="time-box"><span id="days">0</span><small>Days</small></div>
+            <div class="time-box"><span id="hours">0</span><small>Hours</small></div>
+            <div class="time-box"><span id="minutes">0</span><small>Mins</small></div>
+            <div class="time-box"><span id="seconds">0</span><small>Secs</small></div>
+          </div>
+          <div class="arrival-row">
+            <div>
+              <label for="arrival-input">Arrival time (UK)</label>
+              <input id="arrival-input" type="datetime-local" />
+            </div>
+            <button class="primary" id="save-arrival" type="button">Update arrival</button>
+          </div>
+          <p class="hint">Default is 3:00 AM UK time tomorrow.</p>
+        </div>
+      </section>
+
+      <section class="actions">
+        <div>
+          <h2>Santa signals</h2>
+          <p>Tap the bell to help guide the reindeer.</p>
+        </div>
+        <div class="button-row">
+          <button class="ghost" id="bell-button" type="button">Ring the bell</button>
+          <button class="ghost" id="cheer-button" type="button">Ho-ho-ho</button>
+        </div>
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="checklist">
+        <div class="section-header">
+          <h2>Last-minute checklist</h2>
+          <button class="ghost" id="reset-list" type="button">Reset</button>
+        </div>
+        <ul id="checklist" class="checklist-list"></ul>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

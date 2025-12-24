@@ -15,6 +15,9 @@ Per-app checklist:
 - `service-worker.js` lives in the app folder (scope is directory-based).
 - Include at least one icon (preferably 192x192 and 512x512).
 
+Planning/spec documents should live under `specs/` (for example
+`specs/notes/README.md`) so they are versioned but not shipped.
+
 ## Build, Test, and Development Commands
 This repository is intended to be no-build. Apps are served as static files. For local development, use a simple static server from the repo root or an app folder:
 
