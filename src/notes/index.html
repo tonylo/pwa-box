@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="description" content="A tiny offline notes PWA." />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>PWA Notes</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">PWA Box</p>
+        <h1>Notes</h1>
+        <p class="subhead">Offline-first scratchpad saved to this device.</p>
+      </div>
+      <button class="primary" id="new-note" type="button">New note</button>
+    </header>
+
+    <main>
+      <section class="composer">
+        <label for="note-text">Write a note</label>
+        <textarea id="note-text" rows="4" placeholder="Type a quick note..."></textarea>
+        <div class="composer-actions">
+          <span id="status" aria-live="polite"></span>
+          <button id="save-note" type="button">Save note</button>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-header">
+          <h2>Saved notes</h2>
+          <button class="ghost" id="clear-notes" type="button">Clear all</button>
+        </div>
+        <ul id="notes-list" class="notes-list" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

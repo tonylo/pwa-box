@@ -1,0 +1,18 @@
+{
+  "name": "PWA Notes",
+  "short_name": "Notes",
+  "description": "A tiny offline notes PWA.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ee",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
