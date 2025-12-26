@@ -1,5 +1,4 @@
 const STORAGE_KEYS = {
-  arrival: "pwa-box:lsanta-arrival",
   checklist: "pwa-box:lsanta-checklist",
 };
 
@@ -15,8 +14,6 @@ const TIME_ZONE = "Europe/London";
 
 const statusLine = document.getElementById("status-line");
 const localTime = document.getElementById("local-time");
-const arrivalInput = document.getElementById("arrival-input");
-const saveArrival = document.getElementById("save-arrival");
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
@@ -59,7 +56,7 @@ const zonedTimeToUtc = (parts, timeZone) => {
   return new Date(guess.getTime() - offset * 60000);
 };
 
-const getTomorrowUkDateParts = () => {
+const getUkDateParts = () => {
   const formatter = new Intl.DateTimeFormat("en-GB", {
     timeZone: TIME_ZONE,
     year: "numeric",
@@ -67,62 +64,31 @@ const getTomorrowUkDateParts = () => {
     day: "2-digit",
   });
   const parts = formatter.formatToParts(new Date());
-  const year = Number(parts.find((part) => part.type === "year").value);
-  const month = Number(parts.find((part) => part.type === "month").value);
-  const day = Number(parts.find((part) => part.type === "day").value);
-  const ukDate = new Date(Date.UTC(year, month - 1, day));
-  ukDate.setUTCDate(ukDate.getUTCDate() + 1);
   return {
-    year: ukDate.getUTCFullYear(),
-    month: ukDate.getUTCMonth() + 1,
-    day: ukDate.getUTCDate(),
+    year: Number(parts.find((part) => part.type === "year").value),
+    month: Number(parts.find((part) => part.type === "month").value),
+    day: Number(parts.find((part) => part.type === "day").value),
   };
 };
 
+const getNextChristmasUkDateParts = () => {
+  const today = getUkDateParts();
+  const currentYear = today.year;
+  const christmasThisYear = { year: currentYear, month: 12, day: 25 };
+  const now = new Date();
+  const christmasTimestamp = zonedTimeToUtc(
+    { ...christmasThisYear, hour: 0, minute: 0 },
+    TIME_ZONE
+  ).getTime();
+  if (now.getTime() <= christmasTimestamp) {
+    return christmasThisYear;
+  }
+  return { year: currentYear + 1, month: 12, day: 25 };
+};
+
 const getDefaultArrival = () => {
-  const tomorrow = getTomorrowUkDateParts();
-  return zonedTimeToUtc({ ...tomorrow, hour: 3, minute: 0 }, TIME_ZONE).getTime();
-};
-
-const formatUkDateTimeInput = (timestamp) => {
-  const formatter = new Intl.DateTimeFormat("en-CA", {
-    timeZone: TIME_ZONE,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-  const parts = formatter.formatToParts(new Date(timestamp));
-  const lookup = (type) => parts.find((part) => part.type === type).value;
-  return `${lookup("year")}-${lookup("month")}-${lookup("day")}T${lookup("hour")}:${lookup("minute")}`;
-};
-
-const parseUkInputToTimestamp = (value) => {
-  if (!value) {
-    return null;
-  }
-  const [datePart, timePart] = value.split("T");
-  if (!datePart || !timePart) {
-    return null;
-  }
-  const [year, month, day] = datePart.split("-").map(Number);
-  const [hour, minute] = timePart.split(":").map(Number);
-  return zonedTimeToUtc({ year, month, day, hour, minute }, TIME_ZONE).getTime();
-};
-
-const loadArrival = () => {
-  const stored = Number(localStorage.getItem(STORAGE_KEYS.arrival));
-  return Number.isFinite(stored) && stored > 0 ? stored : getDefaultArrival();
-};
-
-const saveArrivalTime = (timestamp) => {
-  localStorage.setItem(STORAGE_KEYS.arrival, String(timestamp));
-};
-
-const updateArrivalInput = (timestamp) => {
-  arrivalInput.value = formatUkDateTimeInput(timestamp);
+  const christmas = getNextChristmasUkDateParts();
+  return zonedTimeToUtc({ ...christmas, hour: 3, minute: 0 }, TIME_ZONE).getTime();
 };
 
 const formatLocalTime = (timestamp) => {
@@ -276,22 +242,9 @@ const scheduleRandomCheer = () => {
   }, delay);
 };
 
-let arrivalTimestamp = loadArrival();
-updateArrivalInput(arrivalTimestamp);
+let arrivalTimestamp = getDefaultArrival();
 renderChecklist();
 renderCountdown(arrivalTimestamp);
-
-saveArrival.addEventListener("click", () => {
-  const timestamp = parseUkInputToTimestamp(arrivalInput.value);
-  if (!timestamp) {
-    showToast("Pick a valid time.");
-    return;
-  }
-  arrivalTimestamp = timestamp;
-  saveArrivalTime(timestamp);
-  renderCountdown(arrivalTimestamp);
-  showToast("Arrival updated.");
-});
 
 resetList.addEventListener("click", () => {
   saveChecklist({});

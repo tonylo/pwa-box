@@ -21,7 +21,7 @@ Out of scope:
 - One primary screen; minimal navigation.
 
 ## Data & Storage
-- Default arrival time: 3:00 AM UK time tomorrow.
+- Default arrival time: 3:00 AM UK time on the next Christmas Day.
 - Store arrival time and checklist state locally (localStorage).
 - No personal data beyond local preferences.
 
