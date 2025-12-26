@@ -12,8 +12,6 @@ const CHECKLIST_ITEMS = [
 
 const TIME_ZONE = "Europe/London";
 
-const statusLine = document.getElementById("status-line");
-const localTime = document.getElementById("local-time");
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
@@ -71,51 +69,23 @@ const getUkDateParts = () => {
   };
 };
 
-const getNextChristmasUkDateParts = () => {
+const getNextChristmasArrival = () => {
   const today = getUkDateParts();
   const currentYear = today.year;
-  const christmasThisYear = { year: currentYear, month: 12, day: 25 };
-  const now = new Date();
-  const christmasTimestamp = zonedTimeToUtc(
-    { ...christmasThisYear, hour: 0, minute: 0 },
+  const thisYearArrival = zonedTimeToUtc(
+    { year: currentYear, month: 12, day: 25, hour: 3, minute: 0 },
     TIME_ZONE
   ).getTime();
-  if (now.getTime() <= christmasTimestamp) {
-    return christmasThisYear;
+  if (Date.now() <= thisYearArrival) {
+    return thisYearArrival;
   }
-  return { year: currentYear + 1, month: 12, day: 25 };
+  return zonedTimeToUtc(
+    { year: currentYear + 1, month: 12, day: 25, hour: 3, minute: 0 },
+    TIME_ZONE
+  ).getTime();
 };
 
-const getDefaultArrival = () => {
-  const christmas = getNextChristmasUkDateParts();
-  return zonedTimeToUtc({ ...christmas, hour: 3, minute: 0 }, TIME_ZONE).getTime();
-};
-
-const formatLocalTime = (timestamp) => {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "full",
-    timeStyle: "short",
-  }).format(new Date(timestamp));
-};
-
-const updateStatus = (remainingMs) => {
-  if (remainingMs <= 0) {
-    statusLine.textContent = "Santa has arrived!";
-    return;
-  }
-  const minutes = remainingMs / 60000;
-  if (minutes > 360) {
-    statusLine.textContent = "Santa is getting ready.";
-  } else if (minutes > 120) {
-    statusLine.textContent = "Sleigh is on the way.";
-  } else if (minutes > 30) {
-    statusLine.textContent = "Almost here. Listen for bells.";
-  } else if (minutes > 10) {
-    statusLine.textContent = "So close!";
-  } else {
-    statusLine.textContent = "Look out the window!";
-  }
-};
+const getDefaultArrival = () => getNextChristmasArrival();
 
 const renderCountdown = (timestamp) => {
   const now = Date.now();
@@ -130,9 +100,6 @@ const renderCountdown = (timestamp) => {
   hoursEl.textContent = pad(hours);
   minutesEl.textContent = pad(minutes);
   secondsEl.textContent = pad(seconds);
-
-  localTime.textContent = `Your time: ${formatLocalTime(timestamp)}`;
-  updateStatus(remaining);
 };
 
 const loadChecklist = () => {

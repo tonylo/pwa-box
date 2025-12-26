@@ -68,7 +68,7 @@ body::before {
     radial-gradient(1.5px 1.5px at 50% 80%, rgba(255, 255, 255, 0.6), transparent 60%),
     radial-gradient(1.5px 1.5px at 10% 70%, rgba(255, 255, 255, 0.6), transparent 60%),
     radial-gradient(2px 2px at 70% 60%, rgba(255, 255, 255, 0.7), transparent 60%);
-  animation: drift 14s linear infinite, snowfall 8s linear infinite;
+  animation: drift 24s linear infinite, snowfall 18s linear infinite;
   opacity: 0.85;
 }
 
@@ -79,7 +79,7 @@ body::before {
     radial-gradient(64px 64px at 50% 70%, rgba(255, 255, 255, 0.8), transparent 60%),
     radial-gradient(48px 48px at 30% 80%, rgba(255, 255, 255, 0.75), transparent 60%),
     radial-gradient(60px 60px at 70% 85%, rgba(255, 255, 255, 0.85), transparent 60%);
-  animation: drift 10s linear infinite, snowfall 6s linear infinite;
+  animation: drift 18s linear infinite, snowfall 12s linear infinite;
   opacity: 0.9;
   filter: blur(0.3px);
 }
@@ -133,7 +133,7 @@ body::before {
     radial-gradient(circle at 82% 50%, #16a34a 0 12px, transparent 13px),
     radial-gradient(circle at 94% 50%, #38bdf8 0 12px, transparent 13px);
   background-size: 200% 100%;
-  animation: twinkle 1s steps(2, end) infinite, chase 3s linear infinite;
+  animation: twinkle 2.4s steps(2, end) infinite, chase 8s linear infinite;
 }
 
 @keyframes twinkle {
@@ -187,23 +187,6 @@ h1 {
   margin: 0;
   color: rgba(255, 255, 255, 0.8);
   font-family: "Chalkboard SE", "Comic Sans MS", "Segoe UI", sans-serif;
-}
-
-.status-card {
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff5db;
-  border-radius: 18px;
-  padding: 12px 16px;
-  font-family: "Chalkboard SE", "Comic Sans MS", "Segoe UI", sans-serif;
-  min-width: 220px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-}
-
-.status-card span {
-  display: block;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 main {
